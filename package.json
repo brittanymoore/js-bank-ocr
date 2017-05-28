@@ -1,0 +1,18 @@
+{
+  "name": "js-bank-ocr",
+  "version": "1.0.0",
+  "description": "JavaScript solution for Bank OCR problem (http://codingdojo.org/kata/BankOCR/)",
+  "main": "main.js",
+  "scripts": {
+    "test": "jasmine **/*.spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brittanymoore/js-bank-ocr.git"
+  },
+  "author": "Brittany Moore <brittanymoore>",
+  "license": "ISC",
+  "dependencies": {
+      "jasmine": "2.6.0"
+  }
+}
