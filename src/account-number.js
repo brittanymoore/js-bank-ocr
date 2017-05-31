@@ -23,10 +23,10 @@ AccountNumber.prototype.isValid = function () {
 
     return checksum % 11 === 0;
 
-}
+};
 
 AccountNumber.prototype.toString = function () {
     return `${this.digits}`;
-}
+};
 
 module.exports = AccountNumber;

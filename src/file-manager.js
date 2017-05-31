@@ -16,12 +16,12 @@ FileManager.prototype.read = function () {
             if (err) {
                 reject(err);
             }
-            fulfill(data.toString().split('\r\n'));
+            fulfill(data.toString().split("\r\n"));
         });
 
     });
 
-}
+};
 
 FileManager.prototype.write = function (filePath, content) {
     this.fs.writeFile(filePath, content, (err) => {
@@ -29,7 +29,7 @@ FileManager.prototype.write = function (filePath, content) {
             throw err;
         }
         console.log("File saved successfully.");
-    })
-}
+    });
+};
 
 module.exports = FileManager;

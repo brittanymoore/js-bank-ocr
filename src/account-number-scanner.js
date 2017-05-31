@@ -14,7 +14,7 @@ AccountNumberScanner.extractAccountNumbers = function (fileLines) {
         numbers.push(number);
     }
     return numbers;
-}
+};
 
 // extract a single account number from a set of lines
 AccountNumberScanner.extractAccountNumber = function (lines) {
@@ -28,7 +28,7 @@ AccountNumberScanner.extractAccountNumber = function (lines) {
         number += digit;
     }
     return number;
-}
+};
 
 // extract a single digit from a set of lines
 AccountNumberScanner.extractDigit = function (lines, i) {
@@ -38,22 +38,22 @@ AccountNumberScanner.extractDigit = function (lines, i) {
         digit = "?";
     }
     return digit;
-}
+};
 
 AccountNumberScanner.padLine = function (line, length) {
     return AccountNumberScanner.padSpacesRight(line, length);
-}
+};
 
 AccountNumberScanner.padSpacesRight = function(str, length) {
     while (str.length < length) {
-        str += ' ';
+        str += " ";
     }
     return str;
-}
+};
 
 // This is a helper object that can be used to lookup the 
 // number associated with a given three-line string.
-AccountNumberScanner.scannableDigits = {}
+AccountNumberScanner.scannableDigits = {};
 AccountNumberScanner.scannableDigits[
     " _ " +
     "| |" +
