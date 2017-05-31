@@ -5,15 +5,11 @@
  */
 
 function AccountNumber(digits) {
-    // properties
     this.digits = digits;
 }
 
-// determine whether the current account number has a valid
-// checksum
 AccountNumber.prototype.isValid = function () {
 
-    // check for 9 digits and string type
     if (typeof(this.digits) !== "string" || this.digits.length !== 9) {
         return false;
     }
