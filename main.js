@@ -2,6 +2,7 @@
 
     let AccountNumber = require('./src/account-number');
     let FileManager = require('./src/file-manager');
+    let DigitScanner = require('./src/account-number-scanner');
     let fs = require('fs');
 
     const OUTPUT_PATH = './output/output.txt';
@@ -14,12 +15,15 @@
 
         // read the input file
         let fileManager = new FileManager(process.argv[2], fs);
-        fileManager.read().then((numbers) => {
+        fileManager.read().then((fileContents) => {
 
+            // Extract the account numbers from the file contents.
+            let numbers = DigitScanner.extractAccountNumbers(fileContents);
+
+            // Write out the account numbers in a new file.
             let returnNumbers = numbers.map((number) => {
                 return number.toString();
             });
-
             fileManager.write(OUTPUT_PATH, returnNumbers.join('\n'));
 
         });
