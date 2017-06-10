@@ -4,16 +4,20 @@
  * lines to an array of account number strings.
  */
 
+const OCRDigitParser = require("./ocr-digit-parser");
+const AccountNumber = require("./account-number");
+
 function AccountNumberScanner() { }
 
 // translate an array of strings into an array of account numbers
 AccountNumberScanner.extractAccountNumbers = function (fileLines) {
-    let numbers = [];
+    let accountNumbers = [];
     for (let i = 0; i + 3 < fileLines.length; i += 4) {
-        let number = AccountNumberScanner.extractAccountNumber(fileLines.slice(i, i + 3));
-        numbers.push(number);
+        let ocrDigits = AccountNumberScanner.extractAccountNumber(fileLines.slice(i, i + 3));
+        let accountNumber = new AccountNumber(ocrDigits);
+        accountNumbers.push(accountNumber);
     }
-    return numbers;
+    return accountNumbers;
 };
 
 // extract a single account number from a set of lines
@@ -22,21 +26,18 @@ AccountNumberScanner.extractAccountNumber = function (lines) {
     lines[0] = AccountNumberScanner.padLine(lines[0], lineLength);
     lines[1] = AccountNumberScanner.padLine(lines[1], lineLength);
     lines[2] = AccountNumberScanner.padLine(lines[2], lineLength);
-    let number = "";
+    let digits = "";
     for (let i = 0; i + 2 < lineLength; i += 3) {
         let digit = AccountNumberScanner.extractDigit(lines, i);
-        number += digit;
+        digits += digit;
     }
-    return number;
+    return digits;
 };
 
 // extract a single digit from a set of lines
 AccountNumberScanner.extractDigit = function (lines, i) {
     let digitString = lines[0].slice(i, i + 3).concat(lines[1].slice(i, i + 3), lines[2].slice(i, i + 3));       
-    let digit = AccountNumberScanner.scannableDigits[digitString];
-    if (!digit) {
-        digit = "?";
-    }
+    let digit = OCRDigitParser.scanDigit(digitString);
     return digit;
 };
 
@@ -50,59 +51,5 @@ AccountNumberScanner.padSpacesRight = function(str, length) {
     }
     return str;
 };
-
-// This is a helper object that can be used to lookup the 
-// number associated with a given three-line string.
-AccountNumberScanner.scannableDigits = {};
-AccountNumberScanner.scannableDigits[
-    " _ " +
-    "| |" +
-    "|_|"
-] = "0";
-AccountNumberScanner.scannableDigits[
-    "   " +
-    "  |" +
-    "  |"
-] = "1";
-AccountNumberScanner.scannableDigits[
-    " _ " +
-    " _|" +
-    "|_ "
-] = "2";
-AccountNumberScanner.scannableDigits[
-    " _ " +
-    " _|" +
-    " _|"
-] = "3";
-AccountNumberScanner.scannableDigits[
-    "   " +
-    "|_|" +
-    "  |"
-] = "4";
-AccountNumberScanner.scannableDigits[
-    " _ " +
-    "|_ " +
-    " _|"
-] = "5";
-AccountNumberScanner.scannableDigits[
-    " _ " +
-    "|_ " +
-    "|_|"
-] = "6";
-AccountNumberScanner.scannableDigits[
-    " _ " +
-    "  |" +
-    "  |"
-] = "7";
-AccountNumberScanner.scannableDigits[
-    " _ " +
-    "|_|" +
-    "|_|"
-] = "8";
-AccountNumberScanner.scannableDigits[
-    " _ " +
-    "|_|" +
-    " _|"
-] = "9";
 
 module.exports = AccountNumberScanner;
